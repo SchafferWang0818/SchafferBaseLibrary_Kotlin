@@ -1,33 +1,124 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.schaffer.base.kotlin"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "mainflavor"]
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a'//, 'x86_64','arm64-v8a','x86','mips','mips64'
+        }
     }
+
+//    signingConfigs {
+//        config {
+//            try {
+//                keyAlias 'xigua'
+//                keyPassword 'yglxigua'
+//                storeFile file('C:/appkey/xigua.jks')
+//                storePassword 'yglxigua'
+//            } catch (ex) {
+//                throw new InvalidUserDataException(ex.toString())
+//            }
+//        }
+//        debug_config {
+//            try {
+//                keyAlias 'xigua'
+//                keyPassword 'yglxigua'
+//                storeFile file('C:/appkey/xigua.jks')
+//                storePassword 'yglxigua'
+//            } catch (ex) {
+//                throw new InvalidUserDataException(ex.toString())
+//            }
+//        }
+//    }
     buildTypes {
         release {
-            minifyEnabled false
+//            signingConfig signingConfigs.config
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            zipAlignEnabled true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+//            signingConfig signingConfigs.debug_config
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            //保证gradle可以找到与aidl相对应的java文件
+            java.srcDirs = ['src/main/java'/*,'src/main/aidl'*/]
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    flavorDimensions "default"
+    productFlavors {
+        mainflavor { dimension "default" }
+        tencent { dimension "default" }
+//        ali {dimension "default"}
+//        qh360 {dimension "default"}
+//        xiaomi {dimension "default"}
+//        meizu {dimension "default"}
+//        huawei {dimension "default"}
+//        oppo {dimension "default"}
+//        vivo {dimension "default"}
+//        wandoujia {dimension "default"}
+//        baidu {dimension "default"}
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation rootProject.ext.dependencies["kotlin-jre"]
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["constraint"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+    implementation rootProject.ext.dependencies["multidex"]
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["retrofit-converter"]
+    implementation rootProject.ext.dependencies["retrofit-adapter"]
+    implementation rootProject.ext.dependencies["okhttp"]
+    implementation rootProject.ext.dependencies["okhttp-logging"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["gson"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["circleimageview"]
+    implementation rootProject.ext.dependencies["banner"]
+    implementation rootProject.ext.dependencies["eventbus"]
+    implementation rootProject.ext.dependencies["xlhratingbar_lib"]
+    implementation rootProject.ext.dependencies["pickerview"]
+    implementation rootProject.ext.dependencies["buglyupgrade"]
+    implementation rootProject.ext.dependencies["buglynative"]
+    implementation rootProject.ext.dependencies["okhttputils"]
+    implementation rootProject.ext.dependencies["airbnbLottie"]
+    debugImplementation rootProject.ext.dependencies["leak"]
+    releaseImplementation rootProject.ext.dependencies["leak_no"]
     testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
