@@ -10,7 +10,7 @@ import com.schaffer.base.kotlin.common.utils.LtUtils
  * Package : com.schaffer.base.kotlin.common.base
  * Description :
  */
-class BaseEmptyActivity<V : BaseView, P : BasePresenter<V>>: BaseView, AppCompatActivity() {
+class BaseEmptyActivity<V : BaseView, P : BasePresenter<V>> : BaseView, AppCompatActivity() {
 
     override fun showLoading(text: String) {
     }
@@ -35,12 +35,13 @@ class BaseEmptyActivity<V : BaseView, P : BasePresenter<V>>: BaseView, AppCompat
 
     override fun showToast(resId: Int) {
         showLog(getString(resId))
-        LtUtils.showToastShort(this.applicationContext,getString(resId))
+        LtUtils.showToastShort(this.applicationContext, getString(resId))
     }
 
     override fun showSnackbar(resId: Int) {
     }
 
     override fun showLog(text: String) {
+        LtUtils.d(text)
     }
 }
