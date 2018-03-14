@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!--transition 动画专用-->
+        <!--&lt;!&ndash; 允许使用transitions &ndash;&gt;-->
+        <!--<item name="android:windowContentTransitions">true</item>-->
+        <!--&lt;!&ndash;是否覆盖执行，其实可以理解成是否同步执行还是顺序执行&ndash;&gt;-->
+        <!--<item name="android:windowAllowEnterTransitionOverlap">false</item>-->
+        <!--<item name="android:windowAllowReturnTransitionOverlap">false</item>-->
+    </style>
+
+    <!--android:windowTranslucentStatus="true" 时隐藏状态栏,Toolbar 向上Padding-->
+    <style name="TransStatusTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <!--虚拟键背景色-->
+        <item name="android:navigationBarColor">@color/colorMainTheme</item>
+        <item name="android:statusBarColor">@color/colorMainTheme</item>
+    </style>
+
+    <!--Material Design 控件使用的Style--><!--设置了以下Theme之后 Toolbar标题在收缩后显示正常而不是显示一半-->
+    <style name="Design.AppBarLayoutFit" parent="Design">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="Design.CollpasingToolbarLayoutFit" parent="Design">
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <style name="Design.ImageViewFit" parent="Design">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="Design.ToolbarFit" parent="Design">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+</resources>
