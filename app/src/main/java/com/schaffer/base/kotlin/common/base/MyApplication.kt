@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.os.Process
 import android.support.multidex.MultiDex
 import com.schaffer.base.kotlin.common.manager.ActivityController
 import com.schaffer.base.kotlin.common.manager.ActivityManager
@@ -40,11 +41,11 @@ class MyApplication : Application() {
         MultiDex.install(base)
     }
 
-    private fun initLibrary() {
-
+    private fun init() {
+        /* library */
     }
 
-     class DefinedActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
+    class DefinedActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
 
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
@@ -73,5 +74,12 @@ class MyApplication : Application() {
         override fun onActivityDestroyed(activity: Activity) {
             ActivityController.removeActivity(activity)
         }
+    }
+
+    private fun initLibrary() {
+        Thread(Runnable {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
+            init()
+        }).start()
     }
 }

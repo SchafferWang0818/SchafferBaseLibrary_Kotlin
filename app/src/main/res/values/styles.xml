@@ -29,7 +29,7 @@
 
 
     <!--状态栏颜色延伸主题,与Toolbar 的android:fitsSystemWindows 配合使用-->
-    <style name="TransStatusTheme" parent="AppTheme"></style>
+    <style name="TransStatusTheme" parent="AppTheme"/>
 
     <!--Material Design 控件使用的基础Style-->
     <style name="Design" />
@@ -72,6 +72,10 @@
         <item name="colorAccent">#868686</item>
         <item name="clock_background">@color/black</item>
         <item name="clock_textColor">@color/whiteSmoke</item>
+    </style>
+
+    <style name="splash_screen" parent="TransStatusTheme">
+        <item name="android:windowBackground">@drawable/screen_splash</item>
     </style>
 
     <!--editText固定格式-->
